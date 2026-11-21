@@ -1,0 +1,16 @@
+# Python 纹理生成工具
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 本地编辑器和系统文件
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+[Dd]esktop.ini
+
+# dist 中保留可安装的 ZIP
+/dist/*
+!/dist/*.zip
