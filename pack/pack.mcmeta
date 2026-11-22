@@ -1,6 +1,6 @@
 {
   "pack": {
-    "description": "岩浆透视 · Java 26.3\n看清岩浆池底，保留橙色流纹",
+    "description": "岩浆透视 · Java 26.3\n半透明岩浆动画，沿用客户端雾效",
     "min_format": [97, 1],
     "max_format": [97, 1]
   }
