@@ -13,13 +13,20 @@ layout(std140) uniform Fog {
 };
 
 bool lavasight_is_lava_fog() {
-    // LavaFogEnvironment uses these three ranges. Powder snow shares the
-    // spectator range, so also check the hue of the unpremultiplied fog.
     bool immersed = FogEnvironmentalStart == 0.25 && FogEnvironmentalEnd == 1.0;
     bool fireResistant = FogEnvironmentalStart == 0.0 && FogEnvironmentalEnd == 5.0;
     bool spectating = FogEnvironmentalStart == -8.0 && FogEnvironmentalEnd == 0.5 * FogRenderDistanceEnd;
+
+    // Tweakeroo changes terrain fog after vanilla copies the original lava
+    // cutoff to sky and clouds. The terrain cutoff can grow with enchantments.
+    bool originalCutoff = FogSkyEnd == FogCloudsEnd && FogEnvironmentalEnd >= FogSkyEnd;
+    bool tweakedLava = originalCutoff && (
+        (FogEnvironmentalStart == 0.0 && (FogSkyEnd == 1.0 || FogSkyEnd == 5.0)) ||
+        (FogEnvironmentalStart == -8.0 && FogSkyEnd == 0.5 * FogRenderDistanceEnd)
+    );
+    // Powder snow shares the spectator range.
     bool lavaHue = FogColor.b == 0.0 && FogColor.g > 0.0 && FogColor.r > 4.0 * FogColor.g;
-    return lavaHue && (immersed || fireResistant || spectating);
+    return lavaHue && (immersed || fireResistant || spectating || tweakedLava);
 }
 
 float linear_fog_value(float distanceToCamera, float start, float end) {

@@ -1,0 +1,10 @@
+{
+  "pack": {
+    "description": "岩浆透视 · Sodium 0.9.2 / Java 26.3\n半透明岩浆，可从岩浆里看清附近的方块",
+    "min_format": [97, 1],
+    "max_format": [97, 1]
+  },
+  "sodium": {
+    "ignored_shaders": ["fog.glsl"]
+  }
+}

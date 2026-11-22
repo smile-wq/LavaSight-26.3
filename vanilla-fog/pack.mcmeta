@@ -3,5 +3,8 @@
     "description": "岩浆透视 · 原版雾效附加包\n潜入岩浆时减弱近雾，保留远处淡出",
     "min_format": [97, 1],
     "max_format": [97, 1]
+  },
+  "sodium": {
+    "ignored_shaders": ["fog.glsl"]
   }
 }
