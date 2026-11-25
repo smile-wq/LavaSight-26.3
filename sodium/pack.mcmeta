@@ -1,6 +1,6 @@
 {
   "pack": {
-    "description": "岩浆透视 · Sodium 0.9.2 / Java 26.3\n半透明岩浆，可从岩浆里看清附近的方块",
+    "description": "岩浆透视 · Sodium 0.9.2\n看远请关闭「使用雾遮挡剔除」",
     "min_format": [97, 1],
     "max_format": [97, 1]
   },

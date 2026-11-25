@@ -6,17 +6,19 @@
 
 在游戏中打开「选项 → 资源包 → 打开资源包文件夹」。按下表选择 ZIP，原样复制进去，在资源包列表中启用并点「完成」。若有其他包也修改岩浆纹理或雾着色器，将选用的 LavaSight 包移到它们上方。
 
-| 使用场景 | 启用的资源包 |
+| 使用场景 | 资源包和设置 |
 | --- | --- |
-| Sodium 0.9.2，想直接看清岩浆内的近处地形 | 只启用 [Sodium 独立包](dist/LavaSight-26.3-Sodium.zip) |
-| 26.3 原版渲染器，想减弱岩浆内的近雾 | [基础包](dist/LavaSight-26.3.zip) 和 [原版雾效附加包](dist/LavaSight-26.3-VanillaFog.zip) |
+| Sodium 0.9.2，想看清岩浆里的地形 | [Sodium 独立包](dist/LavaSight-26.3-Sodium.zip)。要看远，在视频设置中关闭「使用雾遮挡剔除」 |
+| 26.3 原版渲染器，想在岩浆里看远 | [基础包](dist/LavaSight-26.3.zip) 和 [原版雾效附加包](dist/LavaSight-26.3-VanillaFog.zip) |
 | 只想从岸上看清池底 | [基础包](dist/LavaSight-26.3.zip) |
 
 ### Sodium 独立包的可见范围
 
-独立包包含静止和流动岩浆纹理、Sodium 的地形雾着色器，以及实体等由原版绘制的内容使用的雾着色器。启用后，钠可以沿用当前设置。这个版本针对 Minecraft 26.3 和 Sodium 0.9.2，测试时关闭了 Iris 光影。
+独立包包含静止和流动岩浆纹理、Sodium 的地形雾着色器，以及实体等由原版绘制的内容使用的雾着色器。
 
-开启钠的雾遮挡剔除（`use_fog_occlusion`）时，钠先按原始雾距决定绘制哪些 16×16×16 区块段，随后着色器才处理它们的雾。实测中，相机浸在岩浆里时能看清同一区块段内 3.5 格外的方块。墙移到 9.5 格外、跨入下一区块段后，该位置只剩雾色。可见范围取决于相机与区块段边界的位置。
+启用独立包后，在「选项 → 视频设置 → 性能」中关闭「使用雾遮挡剔除」（Use Fog Occlusion），就能在第一人称下潜时看清远处地形。这个开关对整个客户端生效，也可以在退出游戏后将实例 `config/sodium-options.json` 中的 `performance.use_fog_occlusion` 设为 `false`。单人测试使用 Minecraft 26.3、Sodium 0.9.2 和 8 区块渲染距离，关闭了 Iris 光影。生存玩家在没有抗火效果时潜入岩浆，能看清前方 41.5 格处的方块墙。
+
+Tweakeroo 的「灵魂出窍」在游戏选取雾效时让相机返回 `FogType.NONE`。资源包的着色器在钠选好要绘制的区块段后才运行。雾遮挡剔除默认开启，钠会按原始岩浆雾距选取 16×16×16 区块段。开启时，实测能看清同一区块段内 3.5 格外的方块。墙移到 9.5 格外、跨入下一区块段后，该位置只剩雾色。可见范围取决于相机与区块段边界的位置。[Tweakeroo 的相机雾类型](https://github.com/sakura-ryoko/tweakeroo/blob/26.3/src/main/java/fi/dy/masa/tweakeroo/mixin/freecam/MixinCamera_freeCam.java#L15-L22) · [Sodium 的区块段搜索距离](https://github.com/CaffeineMC/sodium/blob/mc26.3-0.9.2/common/src/main/java/net/caffeinemc/mods/sodium/client/render/chunk/RenderSectionManager.java#L364-L374)
 
 独立包在 `pack.mcmeta` 的 `sodium.ignored_shaders` 中列出了 `fog.glsl`，向钠声明包内的 `minecraft:shaders/include/fog.glsl` 不用于钠的地形，钠因此不会弹出兼容性提示。钠的地形使用包中的 `sodium:shaders/include/fog.glsl`。[钠的资源包检查](https://github.com/CaffeineMC/sodium/blob/mc26.3-0.9.2/common/src/main/java/net/caffeinemc/mods/sodium/client/checks/ResourcePackScanner.java)
 
